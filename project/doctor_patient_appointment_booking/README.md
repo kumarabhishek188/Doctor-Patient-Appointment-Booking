@@ -4,7 +4,6 @@
 The Doctor Patient Appointment Booking System is a web application that allows users to register as doctors or patients, view doctors based on location or specialty, make appointments with doctors, and manage their bookings. The system is built using Node.js, Express.js, and MongoDB.
 
 ## Table of Contents
-- [Video presentation of Booking System](#video-presentation)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Code Structure](#code-structure)
@@ -12,9 +11,6 @@ The Doctor Patient Appointment Booking System is a web application that allows u
 - [Login Credentials](#login-credentials)
 - [Dependencies](#dependencies)
 - [Deployment Link](#deployment-link)
-
-## Video Presentation
-- [Video Presentation Link](https://www.youtube.com/watch?v=luw6D1K9f_c)
 
 ## Installation
 Video call functionality will not work on deployed link to experience video calling functionality set up project locally.
@@ -141,11 +137,11 @@ Note: Some endpoints require authentication and authorization based on user role
 
 ## Login Credentials
 - Doctor details
-  - email:  kumargunjan1116@gmail.com,
-  - password: 1234
+  - email:  hello123@gmail.com,
+  - password: 12345
 - Patient details
-  - email:  vashishtnikhil158@gmail.com,
-  - password: 1234
+  - email:  rakesh123@gmail.com,
+  - password: 12345
 
 ## Dependencies
 The Doctor Patient Appointment Booking System relies on the following dependencies:
@@ -157,6 +153,3 @@ The Doctor Patient Appointment Booking System relies on the following dependenci
 - `bcrypt`: Library
 - `nodemailer`: To send Email notification
 
-## Deployment Link
-- [Frontend](https://splendorous-beignet-2007e7.netlify.app/)
-- [Backend](https://dull-teal-walrus-shoe.cyclic.app/)
