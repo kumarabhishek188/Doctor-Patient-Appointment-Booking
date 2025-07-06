@@ -17,10 +17,12 @@ import {
   Link,
 } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route, Link as RouterLink } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
-const baseUrl = "http://localhost:5173";
+const baseUrl = "http://localhost:4000";
 
 const Doctor = () => {
+  const { t } = useTranslation();
   const [doctors, setDoctors] = useState([]);
   const [location, setLocation] = useState("");
   const [specialty, setSpecialty] = useState("");
@@ -82,13 +84,12 @@ const Doctor = () => {
   return (
     <Container>
       <Typography variant="h4" align="center" gutterBottom>
-        Doctor Patient Appointment Booking
+        {t('doctor.title')}
       </Typography>
-
       <Grid container spacing={2} alignItems="center" marginBottom={2}>
         <Grid item xs={12} sm={6}>
           <TextField
-            label="Find doctors by location"
+            label={t('doctor.find_by_location', 'Find doctors by location')}
             fullWidth
             value={location}
             onChange={(e) => setLocation(e.target.value)}
@@ -96,44 +97,60 @@ const Doctor = () => {
         </Grid>
         <Grid item xs={12} sm={3}>
           <Button variant="contained" fullWidth onClick={handleSearch}>
-            Search
+            {t('doctor.search', 'Search')}
           </Button>
         </Grid>
         <Grid item xs={12} sm={3}>
           <FormControl fullWidth>
-            <InputLabel>Specialty</InputLabel>
-            <Select value={specialty} onChange={handleSpecialtyChange}>
-              <MenuItem value="">--Select Specialty--</MenuItem>
-              <MenuItem value="Pediatrician">Pediatrician</MenuItem>
-              <MenuItem value="Obstetricians">Gynecologist</MenuItem>
-              <MenuItem value="Cardiologist">Cardiologist</MenuItem>
-              <MenuItem value="Oncologist">Oncologist</MenuItem>
-              <MenuItem value="Gastroenterologist">Gastroenterologist</MenuItem>
-              <MenuItem value="Pulmonologist">Pulmonologist</MenuItem>
-              <MenuItem value="Infectious disease">Infectious Disease</MenuItem>
-              <MenuItem value="Nephrologist">Nephrologist</MenuItem>
-              <MenuItem value="Endocrinologist">Endocrinologist</MenuItem>
-              <MenuItem value="Ophthalmologist">Ophthalmologist</MenuItem>
-              <MenuItem value="Dermatologist">Dermatologist</MenuItem>
-              <MenuItem value="Psychiatrist">Psychiatrist</MenuItem>
-              <MenuItem value="Neurologist">Neurologist</MenuItem>
-              <MenuItem value="Radiologist">Radiologist</MenuItem>
-              <MenuItem value="Surgeon">Surgeon</MenuItem>
-              <MenuItem value="Physician">Physician</MenuItem>
+            <InputLabel>{t('doctor.specialty', 'Specialty')}</InputLabel>
+            <Select value={specialty} onChange={handleSpecialtyChange} label={t('doctor.specialty', 'Specialty')}>
+              <MenuItem value="">--{t('doctor.select_specialty', 'Select Specialty')}--</MenuItem>
+              <MenuItem value="Pediatrician">{t('doctor.pediatrician', 'Pediatrician')}</MenuItem>
+              <MenuItem value="Obstetricians">{t('doctor.gynecologist', 'Gynecologist')}</MenuItem>
+              <MenuItem value="Cardiologist">{t('doctor.cardiologist', 'Cardiologist')}</MenuItem>
+              <MenuItem value="Oncologist">{t('doctor.oncologist', 'Oncologist')}</MenuItem>
+              <MenuItem value="Gastroenterologist">{t('doctor.gastroenterologist', 'Gastroenterologist')}</MenuItem>
+              <MenuItem value="Pulmonologist">{t('doctor.pulmonologist', 'Pulmonologist')}</MenuItem>
+              <MenuItem value="Infectious disease">{t('doctor.infectious_disease', 'Infectious Disease')}</MenuItem>
+              <MenuItem value="Nephrologist">{t('doctor.nephrologist', 'Nephrologist')}</MenuItem>
+              <MenuItem value="Endocrinologist">{t('doctor.endocrinologist', 'Endocrinologist')}</MenuItem>
+              <MenuItem value="Ophthalmologist">{t('doctor.ophthalmologist', 'Ophthalmologist')}</MenuItem>
+              <MenuItem value="Dermatologist">{t('doctor.dermatologist', 'Dermatologist')}</MenuItem>
+              <MenuItem value="Psychiatrist">{t('doctor.psychiatrist', 'Psychiatrist')}</MenuItem>
+              <MenuItem value="Neurologist">{t('doctor.neurologist', 'Neurologist')}</MenuItem>
+              <MenuItem value="Radiologist">{t('doctor.radiologist', 'Radiologist')}</MenuItem>
+              <MenuItem value="Surgeon">{t('doctor.surgeon', 'Surgeon')}</MenuItem>
+              <MenuItem value="Physician">{t('doctor.physician', 'Physician')}</MenuItem>
             </Select>
           </FormControl>
         </Grid>
       </Grid>
-
       <Grid container spacing={2}>
         {doctors.map((doctor) => (
           <Grid item xs={12} sm={6} md={4} key={doctor._id}>
-            <Card>
+            <Card
+              sx={{
+                transition: 'transform 0.2s, box-shadow 0.2s',
+                '&:hover': {
+                  transform: 'translateY(-8px) scale(1.03)',
+                  boxShadow: 6,
+                  background: (theme) => theme.palette.mode === 'dark' ? '#23272a' : '#e3f2fd',
+                },
+                borderRadius: 3,
+                boxShadow: 3,
+                minHeight: 220,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}
+            >
               <CardContent>
-                <Typography variant="h6">Name: {doctor.name}</Typography>
-                <Typography>Email: {doctor.email}</Typography>
-                <Typography>Location: {doctor.location}</Typography>
-                <Typography>Specialty: {doctor.specialty}</Typography>
+                <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+                  {t('doctor.name', 'Name')}: {doctor.name}
+                </Typography>
+                <Typography sx={{ mb: 0.5 }}>{t('doctor.email', 'Email')}: {doctor.email}</Typography>
+                <Typography sx={{ mb: 0.5 }}>{t('doctor.location', 'Location')}: {doctor.location}</Typography>
+                <Typography sx={{ mb: 2 }}>{t('doctor.specialty', 'Specialty')}: {doctor.specialty}</Typography>
                 <Button
                   variant="contained"
                   color="primary"
@@ -141,8 +158,18 @@ const Doctor = () => {
                   onClick={() => handleBookAppointment(doctor._id)}
                   component={RouterLink}
                   to="/book-appointment"
+                  sx={{
+                    fontWeight: 600,
+                    borderRadius: 2,
+                    py: 1.2,
+                    background: 'linear-gradient(90deg, #1976d2 0%, #42a5f5 100%)',
+                    boxShadow: 2,
+                    '&:hover': {
+                      background: 'linear-gradient(90deg, #1565c0 0%, #1976d2 100%)',
+                    },
+                  }}
                 >
-                  Book Appointment
+                  {t('doctor.book_appointment', 'Book Appointment')}
                 </Button>
               </CardContent>
             </Card>
@@ -150,39 +177,6 @@ const Doctor = () => {
         ))}
       </Grid>
     </Container>
-  );
-};
-
-const BookAppointmentPage = () => {
-  return (
-    <Typography variant="h5" align="center">
-      Book Appointment Page (Under Development)
-    </Typography>
-  );
-};
-
-const App = () => {
-  return (
-    <Router>
-      <AppBar position="static">
-        <Toolbar>
-          <Link component={RouterLink} to="/" color="inherit" underline="none" marginRight={2}>
-            Home
-          </Link>
-          <Link component={RouterLink} to="/doctors" color="inherit" underline="none" marginRight={2}>
-            Doctors
-          </Link>
-          <Link component={RouterLink} to="/book-appointment" color="inherit" underline="none">
-            Book Appointment
-          </Link>
-        </Toolbar>
-      </AppBar>
-      <Routes>
-        <Route path="/" element={<DoctorsPage />} />
-        <Route path="/doctors" element={<DoctorsPage />} />
-        <Route path="/book-appointment" element={<BookAppointmentPage />} />
-      </Routes>
-    </Router>
   );
 };
 

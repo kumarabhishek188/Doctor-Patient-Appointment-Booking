@@ -34,6 +34,9 @@ bookingRoutes.post(
   authorisation(["patient"]),
   async (req, res) => {
     const data = req.body;
+    if (!data.doctorId || !data.bookingDate || !data.bookingSlot || !data.userId || !data.userEmail) {
+      return res.status(400).json({ success: false, msg: "All required fields must be filled." });
+    }
     try {
       let allBookings = await Bookingmodel.find({ doctorId: data.doctorId });
       if (allBookings.length === 0) {
@@ -45,7 +48,7 @@ bookingRoutes.post(
             allBookings[i].bookingDate === data.bookingDate &&
             allBookings[i].bookingSlot === data.bookingSlot
           ) {
-            return res.json({
+            return res.status(409).json({
               success: false,
               msg: "This Slot is Not Available.",
             });
@@ -55,14 +58,14 @@ bookingRoutes.post(
         await addData.save();
       }
       // Return a successful response without sending an email
-      return res.status(200).json({
+      return res.status(201).json({
         success: true,
         msg: "Booking confirmed",
         bookingDate: data.bookingDate,
       });
     } catch (error) {
       console.log("error from adding new booking data", error.message);
-      res.json({
+      res.status(500).json({
         success: false,
         msg: "error in adding new booking data",
         errorMsg: error.message,

@@ -29,15 +29,30 @@ app.get("/:room",(req,res)=>{
   res.render('room',{roomId: req.params.room});
 });
 
-io.on("connection",(socket)=>{
-  socket.on('joinRoom',(roomId,userId)=>{
-    socket.join(roomId);
-    socket.broadcast.to(roomId).emit('userConnected',userId);
+const roomUsers = {};
 
-    socket.on('disconnect',()=>{
-      socket.broadcast.to(roomId).emit('userDisconnected',userId);
+io.on("connection", (socket) => {
+  socket.on('joinRoom', (roomId, userId) => {
+    socket.join(roomId);
+    if (!roomUsers[roomId]) roomUsers[roomId] = [];
+    roomUsers[roomId].push(userId);
+
+    // Send all existing users to the new user (except themselves)
+    const otherUsers = roomUsers[roomId].filter(id => id !== userId);
+    socket.emit('allUsers', otherUsers);
+
+    // Notify others
+    socket.broadcast.to(roomId).emit('userConnected', userId);
+
+    socket.on('chatMessage', ({ roomId, message }) => {
+      socket.broadcast.to(roomId).emit('chatMessage', { message });
     });
-  })
+
+    socket.on('disconnect', () => {
+      roomUsers[roomId] = (roomUsers[roomId] || []).filter(id => id !== userId);
+      socket.broadcast.to(roomId).emit('userDisconnected', userId);
+    });
+  });
 });
 
 httpServer.listen(process.env.port,async()=>{

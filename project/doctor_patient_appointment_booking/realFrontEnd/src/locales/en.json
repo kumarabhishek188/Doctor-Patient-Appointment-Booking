@@ -1,0 +1,62 @@
+{
+  "navbar": {
+    "home": "Home",
+    "doctors": "Doctors",
+    "appointments": "Appointments",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "notifications": "Notifications",
+    "dark_mode": "Dark Mode",
+    "light_mode": "Light Mode",
+    "language": "Language"
+  },
+  "home": {
+    "welcome": "Welcome to Doctor-Patient Appointment Booking!",
+    "book_now": "Book Now"
+  },
+  "doctor": {
+    "title": "Doctor List",
+    "find_by_location": "Find doctors by location",
+    "search": "Search",
+    "specialty": "Specialty",
+    "select_specialty": "Select Specialty",
+    "pediatrician": "Pediatrician",
+    "gynecologist": "Gynecologist",
+    "cardiologist": "Cardiologist",
+    "oncologist": "Oncologist",
+    "gastroenterologist": "Gastroenterologist",
+    "pulmonologist": "Pulmonologist",
+    "infectious_disease": "Infectious Disease",
+    "nephrologist": "Nephrologist",
+    "endocrinologist": "Endocrinologist",
+    "ophthalmologist": "Ophthalmologist",
+    "dermatologist": "Dermatologist",
+    "psychiatrist": "Psychiatrist",
+    "neurologist": "Neurologist",
+    "radiologist": "Radiologist",
+    "surgeon": "Surgeon",
+    "physician": "Physician",
+    "name": "Name",
+    "email": "Email",
+    "location": "Location",
+    "book_appointment": "Book Appointment"
+  },
+  "appointment": {
+    "your_appointments": "Your Appointments",
+    "no_appointments": "No appointments found."
+  },
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Login"
+  },
+  "register": {
+    "title": "Register",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Register"
+  }
+}

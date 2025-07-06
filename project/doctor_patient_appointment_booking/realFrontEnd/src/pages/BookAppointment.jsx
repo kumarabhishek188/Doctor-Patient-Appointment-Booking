@@ -13,13 +13,16 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const BookAppointment = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [bookingDate, setBookingDate] = useState("");
   const [bookingSlot, setBookingSlot] = useState("");
   const [minDate, setMinDate] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   // Set the minimum date (tomorrow)
   useEffect(() => {
@@ -35,7 +38,8 @@ const BookAppointment = () => {
 
   const handleBooking = async (e) => {
     e.preventDefault();
-
+    setError("");
+    setSuccess("");
     const token = sessionStorage.getItem("token");
     const doctorId = sessionStorage.getItem("doctorId");
 
@@ -60,28 +64,36 @@ const BookAppointment = () => {
       const res = await axios.post(`/booking/create`, appointmentObj, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: token,
+          Authorization: `Bearer ${token}`,
         },
       });
       const out = res.data;
       if (out.success) {
-        alert(
+        setSuccess(
           `Hi, your booking is confirmed on ${bookingDate} and a confirmation email has been sent to your registered email.`
         );
+        setBookingDate("");
+        setBookingSlot("");
+        setTimeout(() => navigate("/appointments"), 1500);
       } else {
-        alert(out.msg);
+        setError(out.msg);
       }
     } catch (error) {
+      setError("Something went wrong booking an appointment!");
       console.error("Error booking an appointment:", error.message);
-      alert("Something went wrong booking an appointment!");
     }
   };
 
   return (
     <Box sx={{ maxWidth: 500, mx: "auto", p: 3 }}>
       <Typography variant="h4" align="center" gutterBottom>
-        Book An Appointment
+        {t("doctor.book_appointment")}
       </Typography>
+      {success && (
+        <Alert severity="success" sx={{ mb: 2 }}>
+          {success}
+        </Alert>
+      )}
       {error && (
         <Alert severity="error" sx={{ mb: 2 }}>
           {error}

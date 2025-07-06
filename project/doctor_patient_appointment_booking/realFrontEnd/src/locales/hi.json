@@ -1,0 +1,62 @@
+{
+  "navbar": {
+    "home": "होम",
+    "doctors": "डॉक्टर",
+    "appointments": "अपॉइंटमेंट्स",
+    "login": "लॉगिन",
+    "register": "रजिस्टर",
+    "logout": "लॉगआउट",
+    "notifications": "सूचनाएँ",
+    "dark_mode": "डार्क मोड",
+    "light_mode": "लाइट मोड",
+    "language": "भाषा"
+  },
+  "home": {
+    "welcome": "डॉक्टर-पेशेंट अपॉइंटमेंट बुकिंग में आपका स्वागत है!",
+    "book_now": "अभी बुक करें"
+  },
+  "doctor": {
+    "title": "डॉक्टर सूची",
+    "find_by_location": "स्थान द्वारा डॉक्टर खोजें",
+    "search": "खोजें",
+    "specialty": "विशेषज्ञता",
+    "select_specialty": "विशेषज्ञता चुनें",
+    "pediatrician": "बाल रोग विशेषज्ञ",
+    "gynecologist": "स्त्री रोग विशेषज्ञ",
+    "cardiologist": "हृदय रोग विशेषज्ञ",
+    "oncologist": "कैंसर विशेषज्ञ",
+    "gastroenterologist": "पाचन तंत्र विशेषज्ञ",
+    "pulmonologist": "फेफड़े विशेषज्ञ",
+    "infectious_disease": "संक्रामक रोग विशेषज्ञ",
+    "nephrologist": "गुर्दा विशेषज्ञ",
+    "endocrinologist": "अंतःस्रावी विशेषज्ञ",
+    "ophthalmologist": "नेत्र रोग विशेषज्ञ",
+    "dermatologist": "त्वचा विशेषज्ञ",
+    "psychiatrist": "मनोचिकित्सक",
+    "neurologist": "तंत्रिका रोग विशेषज्ञ",
+    "radiologist": "रेडियोलॉजिस्ट",
+    "surgeon": "सर्जन",
+    "physician": "चिकित्सक",
+    "name": "नाम",
+    "email": "ईमेल",
+    "location": "स्थान",
+    "book_appointment": "अपॉइंटमेंट बुक करें"
+  },
+  "appointment": {
+    "your_appointments": "आपकी अपॉइंटमेंट्स",
+    "no_appointments": "कोई अपॉइंटमेंट नहीं मिली।"
+  },
+  "login": {
+    "title": "लॉगिन",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "submit": "लॉगिन"
+  },
+  "register": {
+    "title": "रजिस्टर",
+    "name": "नाम",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "submit": "रजिस्टर"
+  }
+}

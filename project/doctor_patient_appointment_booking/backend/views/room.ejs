@@ -20,12 +20,43 @@
             grid-template-columns: repeat(2, 1fr);
             padding: 30px;
             gap: 30px;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(80,120,200,0.10);
+            min-height: 320px;
+            background: none;
+        }
+
+        .video-frame {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(80,120,200,0.13);
+            padding: 12px 12px 0 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid #b3c6e0;
+            transition: box-shadow 0.2s, border 0.2s;
+        }
+
+        .video-frame:hover {
+            box-shadow: 0 6px 24px rgba(80,120,200,0.18);
+            border: 2px solid #3498db;
         }
 
         video {
             width: 100%;
-            height: 100%;
+            height: 240px;
             object-fit: cover;
+            border-radius: 12px;
+            background: #eaf6ff;
+        }
+
+        .video-label {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+            font-size: 16px;
+            letter-spacing: 0.5px;
         }
 
         .toggle-btn {
@@ -53,13 +84,60 @@
             padding: 10px;
             background-color: lightblue;
         }
+
+        #chatContainer {
+            max-width: 500px;
+            margin: 30px auto 0 auto;
+            padding: 10px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+
+        #chatMessages {
+            height: 180px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 8px 4px 8px 8px;
+            background: #f9f9f9;
+            margin-bottom: 10px;
+            border-radius: 6px;
+        }
+
+        #chatInput {
+            flex: 1;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #bbb;
+        }
+
+        #sendBtn {
+            background: #3498db;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
-    <div id="videoGrid"></div>
-    <div id="btnsDiv">
-        <button id="audio" class="toggle-btn"> Toggle Audio</button>
-        <button id="camera" class="toggle-btn">Toggle Camera</button>
+    <h2 style="text-align:center; color:#333; margin-top:20px;">Doctor-Patient Video Call Room: <span style="color:darkblue"><%= roomId %></span></h2>
+    <div style="display:flex;justify-content:center;align-items:flex-start;gap:32px;max-width:1200px;margin:0 auto;">
+        <div style="flex:2;min-width:350px;">
+            <div id="timerBar" style="text-align:center; color:#444; margin:10px; font-size:16px;">Call Duration: <span id="callTimer">00:00</span></div>
+            <div id="videoGrid"></div>
+            <div id="noRemoteMsg" style="text-align:center; color:darkred; margin:10px; display:none;">Waiting for other participant to join...</div>
+            <div id="btnsDiv">
+                <button id="audio" class="toggle-btn">Mute Audio</button>
+                <button id="camera" class="toggle-btn">Turn Off Camera</button>
+                <button id="leave" class="toggle-btn" style="background-color: #e74c3c; color: white;">Leave Call</button>
+            </div>
+        </div>
+        <div id="chatContainer" style="flex:1;min-width:300px;max-width:350px;height:480px;margin-top:10px;padding:0 0 0 0;background:#fff;border-radius:10px;box-shadow:0 2px 8px #ccc;display:flex;flex-direction:column;">
+            <h3 style="text-align:center;color:#3498db;margin:12px 0 8px 0;">Chat</h3>
+            <div id="chatMessages" style="flex:1;height:0;overflow-y:auto;border:1px solid #e0e0e0;padding:10px 8px 10px 12px;background:#f7fbff;margin:0 12px 10px 12px;border-radius:6px;font-size:15px;"></div>
+            <div style="display:flex;gap:8px;padding:0 12px 12px 12px;">
+                <input id="chatInput" type="text" placeholder="Type a message..." style="flex:1;padding:8px;border-radius:6px;border:1px solid #bbb;font-size:15px;" />
+                <button id="sendBtn" class="toggle-btn" style="background:#3498db;color:#fff;font-size:15px;">Send</button>
+            </div>
+        </div>
     </div>
 </body>
 </html>

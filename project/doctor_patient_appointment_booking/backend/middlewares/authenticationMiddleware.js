@@ -4,6 +4,9 @@ const authentication=async(req,res,next)=>{
     let token=req.headers.authorization;
     try {
         if(token){
+            if (token.startsWith('Bearer ')) {
+                token = token.slice(7);
+            }
             let decode=jwt.verify(token,process.env.Key);
             let userId=decode.userId;
             let role=decode.role;

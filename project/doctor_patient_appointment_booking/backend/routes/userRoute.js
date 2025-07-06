@@ -46,25 +46,27 @@ userRoute.get("/doctors/specialty/:value",async(req,res)=>{
 //Route to add new user(doctor/patient)
 userRoute.post("/register",async(req,res)=>{
     const {name,email,password,role,specialty,location}=req.body;
-
+    if (!name || !email || !password || !location || (role==="doctor" && !specialty)) {
+        return res.status(400).json({"msg":"All required fields must be filled."});
+    }
     try {
         let reqData=await Usermodel.find({email});
         if(reqData.length>0){
-            return res.json({"msg":"You are already register"})
+            return res.status(409).json({"msg":"You are already register"})
         }
         bcrypt.hash(password,5,async(err,hash)=>{
             if(err){
                 console.log("error from hashing password",err);
-                res.json({"msg":"error from hashing password"})
+                res.status(500).json({"msg":"error from hashing password"})
             }else{
                 let registerData=new Usermodel({name,email,password:hash,role,specialty:specialty||"None",location});
                 await registerData.save();
-                res.json({"msg":"Successfully register"})
+                res.status(201).json({"msg":"Successfully register"})
             }
         })
     } catch (error) {
         console.log("error from register route",error);
-        res.json({"msg":"error in register a user"})
+        res.status(500).json({"msg":"error in register a user"})
     }
 })
 

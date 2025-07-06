@@ -12,10 +12,12 @@ import {
   Paper,
 } from "@mui/material";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
-const baseUrl = `http://localhost:5500`;
+const baseUrl = `http://localhost:4000`;
 
 const AppointmentPage = () => {
+  const { t } = useTranslation();
   const [appointments, setAppointments] = useState([]);
   const [userRole, setUserRole] = useState("");
   const [userName, setUserName] = useState("");
@@ -73,7 +75,7 @@ const AppointmentPage = () => {
   };
 
   const handleVideoCall = (id) => {
-    window.open(`http://localhost:5000/${id}`, "_blank");
+    window.open(`http://localhost:4000/${id}`, "_blank");
   };
 
   const formatTimeSlot = (slot) => {
@@ -91,8 +93,8 @@ const AppointmentPage = () => {
 
   return (
     <div>
-      <Typography variant="h4" align="center" gutterBottom>
-        Doctor Patient Appointment Booking
+      <Typography variant="h4" align="center" sx={{ mt: 4, mb: 2 }}>
+        {t('appointment.your_appointments')}
       </Typography>
       <Typography variant="h5" align="center" gutterBottom>
         All Bookings of {userRole} {userName}

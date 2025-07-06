@@ -7,12 +7,12 @@ export default defineConfig({
     proxy: {
       // Proxy requests starting with /booking and /user to your backend
       '/booking': {
-        target: 'http://localhost:5500',
+        target: 'http://localhost:4000',
         changeOrigin: true,
         secure: false,
       },
       '/user': {
-        target: 'http://localhost:5500',
+        target: 'http://localhost:4000',
         changeOrigin: true,
         secure: false,
       },

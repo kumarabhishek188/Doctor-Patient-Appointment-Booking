@@ -8,9 +8,13 @@ import {
   FormControl,
   Typography,
   Box,
+  Alert,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const RegisterPage = () => {
+  const { t } = useTranslation();
   const [role, setRole] = useState("patient");
   const [formData, setFormData] = useState({
     name: "",
@@ -19,6 +23,9 @@ const RegisterPage = () => {
     password: "",
     specialty: "",
   });
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,24 +34,54 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
     const data = {
       ...formData,
       role: role === "doctor" ? "doctor" : "patient",
     };
 
+    // Basic validation
+    if (
+      !data.name ||
+      !data.email ||
+      !data.location ||
+      !data.password ||
+      (role === "doctor" && !data.specialty)
+    ) {
+      setError("Please fill all required fields.");
+      return;
+    }
+
     try {
-      const res = await fetch(`http://localhost:5500/user/register`, {
+      const res = await fetch(`/user/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      const out = await res.json();
-      alert(out.msg);
+      let out = {};
+      try {
+        out = await res.json();
+      } catch (jsonErr) {
+        setError("Server error: Invalid response from backend.");
+        console.error("Invalid JSON from backend", jsonErr);
+        return;
+      }
       if (out.msg === "Successfully register") {
-        window.location.href = "/login";
+        setSuccess("Registration successful! Redirecting to login...");
+        setFormData({
+          name: "",
+          email: "",
+          location: "",
+          password: "",
+          specialty: "",
+        });
+        setTimeout(() => navigate("/login"), 1500);
+      } else {
+        setError(out.msg || "Registration failed.");
       }
     } catch (err) {
-      alert("Error while registering");
+      setError("Error while registering");
       console.error(err);
     }
   };
@@ -52,7 +89,7 @@ const RegisterPage = () => {
   return (
     <Box sx={{ p: 4 }}>
       <Typography variant="h4" sx={{ mb: 3 }}>
-        Register As
+        {t("register.title")}
       </Typography>
       <Box sx={{ mb: 2 }}>
         <Button
@@ -108,21 +145,19 @@ const RegisterPage = () => {
             >
               <MenuItem value="">--Select Speciality--</MenuItem>
               <MenuItem value="Pediatrician">Pediatrician</MenuItem>
-              <MenuItem value="Obstetricians">Gynecologist</MenuItem>
+              <MenuItem value="Gynecologist">Gynecologist</MenuItem>
               <MenuItem value="Cardiologist">Cardiologist</MenuItem>
               <MenuItem value="Oncologist">Oncologist</MenuItem>
               <MenuItem value="Gastroenterologist">Gastroenterologist</MenuItem>
               <MenuItem value="Pulmonologist">Pulmonologist</MenuItem>
-              <MenuItem value="Infectious disease">Infectious disease</MenuItem>
+              <MenuItem value="Infectious disease">Infectious Disease</MenuItem>
               <MenuItem value="Nephrologist">Nephrologist</MenuItem>
               <MenuItem value="Endocrinologist">Endocrinologist</MenuItem>
               <MenuItem value="Ophthalmologist">Ophthalmologist</MenuItem>
-              <MenuItem value="Otolaryngologist">Otolaryngologist</MenuItem>
               <MenuItem value="Dermatologist">Dermatologist</MenuItem>
               <MenuItem value="Psychiatrist">Psychiatrist</MenuItem>
               <MenuItem value="Neurologist">Neurologist</MenuItem>
               <MenuItem value="Radiologist">Radiologist</MenuItem>
-              <MenuItem value="Anesthesiologist">Anesthesiologist</MenuItem>
               <MenuItem value="Surgeon">Surgeon</MenuItem>
               <MenuItem value="Physician">Physician</MenuItem>
 
@@ -144,6 +179,8 @@ const RegisterPage = () => {
           Register
         </Button>
       </form>
+      {success && <Alert severity="success">{success}</Alert>}
+      {error && <Alert severity="error">{error}</Alert>}
     </Box>
   );
 };
